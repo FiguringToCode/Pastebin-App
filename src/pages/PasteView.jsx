@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 
 function PasteView() {
   const { id } = useParams();
@@ -7,6 +7,9 @@ function PasteView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const location = useLocation()
+
+  const initialUrlFromState = location.state?.url
 
   useEffect(() => {
     fetch(`https://pastebin-backend-fprz.onrender.com/api/pastes/${id}`)
@@ -43,13 +46,13 @@ function PasteView() {
         <div className="flex justify-between items-start mb-6">
           <h1 className="text-xl font-semibold text-gray-800">Paste #{id}</h1>
           <div className="text-sm text-gray-500 space-y-1">
-            {paste.remainingViews !== null && <p>Views left: {paste.remainingViews}</p>}
-            {paste.expiresAt && <p>Expires: {new Date(paste.expiresAt).toLocaleString()}</p>}
+            {paste.remainingViews !== null && <p>Views left: {paste.remaining_views}</p>}
+            {paste.expiresAt && <p>Expires: {new Date(paste.expires_at).toLocaleString()}</p>}
           </div>
         </div>
-        <pre className="bg-gray-50 p-6 rounded-md text-sm overflow-auto whitespace-pre-wrap">
+        <Link to={initialUrlFromState} className="bg-gray-50 p-6 rounded-md text-sm overflow-auto whitespace-pre-wrap">
           {paste.content}
-        </pre>
+        </Link>
       </div>
     </div>
   );

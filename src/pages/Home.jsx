@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const [content, setContent] = useState('');
-  const [ttlSeconds, setTtlSeconds] = useState('');
-  const [maxViews, setMaxViews] = useState('');
+  const [ttl_seconds, setTtlSeconds] = useState('');
+  const [max_views, setMaxViews] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -18,9 +18,9 @@ function Home() {
     setLoading(true);
     setError('');
     try {
-      const body = { content, ttlSeconds, maxViews };
-      if (ttlSeconds) body.ttlSeconds = parseInt(ttlSeconds);
-      if (maxViews) body.maxViews = parseInt(maxViews);
+      const body = { content, ttl_seconds, max_views };
+      if (ttl_seconds) body.ttl_seconds = parseInt(ttl_seconds);
+      if (max_views) body.max_views = parseInt(max_views);
       const res = await fetch('https://pastebin-backend-fprz.onrender.com/api/pastes', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -31,7 +31,10 @@ function Home() {
         throw new Error(data.error || 'Creation failed');
       }
       const data = await res.json();
-      navigate(`/${data.id}`);
+      console.log(data)
+      navigate(`/${data.id}`, {
+        state: { url: data.url }
+      });
     } catch (err) {
       setError(err.message);
     } finally {
@@ -53,17 +56,17 @@ function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           <input
             type="number"
-            value={ttlSeconds}
+            value={ttl_seconds}
             onChange={(e) => setTtlSeconds(e.target.value)}
-            placeholder="TTL seconds (optional)"
+            placeholder="TTL seconds"
             className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             min="1"
           />
           <input
             type="number"
-            value={maxViews}
+            value={max_views}
             onChange={(e) => setMaxViews(e.target.value)}
-            placeholder="Max views (optional)"
+            placeholder="Max views"
             className="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             min="1"
           />
