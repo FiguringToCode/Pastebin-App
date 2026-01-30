@@ -18,7 +18,7 @@ function Home() {
     setLoading(true);
     setError('');
     try {
-      const body = { content };
+      const body = { content, ttlSeconds, maxViews };
       if (ttlSeconds) body.ttlSeconds = parseInt(ttlSeconds);
       if (maxViews) body.maxViews = parseInt(maxViews);
       const res = await fetch('https://pastebin-backend-fprz.onrender.com/api/pastes', {
