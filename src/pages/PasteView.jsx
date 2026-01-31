@@ -41,18 +41,21 @@ function PasteView() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center p-8">
-      <div className="bg-white p-8 rounded-lg shadow-md max-w-4xl w-full">
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-8">
+      <div className="bg-white p-8 rounded-lg shadow-md max-w-5xl w-full">
         <div className="flex justify-between items-start mb-6">
-          <h1 className="text-xl font-semibold text-gray-800">Paste #{id}</h1>
+          <h1 className="text-xl font-semibold text-gray-800">Paste id :- {id}</h1>
           <div className="text-sm text-gray-500 space-y-1">
             {paste.remainingViews !== null && <p>Views left: {paste.remaining_views}</p>}
             {paste.expiresAt && <p>Expires: {new Date(paste.expires_at).toLocaleString()}</p>}
           </div>
         </div>
-        <Link to={initialUrlFromState} className="bg-gray-50 p-6 rounded-md text-sm overflow-auto whitespace-pre-wrap">
+        <p className="bg-blue-300 p-5 rounded-md text-sm text-center overflow-auto whitespace-pre-wrap">
           {paste.content}
-        </Link>
+        </p>
+        <div className='mt-10 underline text-blue-800'>
+          <Link to={initialUrlFromState}>Shared Link :- {initialUrlFromState}</Link>
+        </div>
       </div>
     </div>
   );
